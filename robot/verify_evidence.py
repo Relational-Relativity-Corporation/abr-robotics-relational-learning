@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import zipfile
+import tempfile
 from pathlib import Path
 from run_experiment import KernelBridge, HERE, ROOT
 from signals import forward_return
@@ -22,9 +23,15 @@ def verify(path,replay=False):
     cfg=json.loads(read('config.json'));stage=json.loads(read('stage1.json'));summary=json.loads(read('summary.json'))
     assert hashlib.sha256(read('stage1.json')).hexdigest()==cfg['stage1_sha256']
     assert read('stage1.json')==(ROOT/cfg['stage1_file']).read_bytes()
-    assert cfg==json.loads((HERE/'config.json').read_text())
     expected=[(e['id'],e['from_node'],e['to_node']) for e in stage['abr_topology']['edges']]
-    bridge=KernelBridge(HERE/'config.json',ROOT/cfg['stage1_file']) if replay else None
+    # Replay the saved declaration, including historical configurations, not
+    # today's active runner configuration. Historical evidence is immutable.
+    replay_directory=tempfile.TemporaryDirectory() if replay else None
+    if replay:
+        replay_config=Path(replay_directory.name)/'config.json'
+        replay_config.write_bytes(read('config.json'))
+    bridge=KernelBridge(replay_config,ROOT/cfg['stage1_file']) if replay else None
+    observation_only=summary.get('execution_mode')=='canonical_observation_only'
     previous_id=None;step=0;last_time=-1.;counts=[]
     def no_world(value):
         if isinstance(value,dict):
@@ -58,15 +65,27 @@ def verify(path,replay=False):
                 else:assert kernel['persistence']['prior_observation_id']==previous_id
                 previous_id=record['kernel_request']['observation_id']
                 if replay:assert bridge.execute(record['kernel_request'])==kernel, f'canonical replay mismatch {step}'
-            for record in records[-5:]:
-                assert record['command']['reason']=='measured_stop'
-                assert record['motor_application']['after_braking']['shaft_velocity_rad_s']==[0.,0.]
+            if observation_only:
+                for record in records:
+                    assert record['command'] is None
+                    assert record['actuation']['status']=='NOT_ISSUED'
+                    assert record['actuation']['reason']=='NO_ORIGIN_AUTHORIZED_OPERATOR_TO_ACTUATOR_MAPPING'
+                    assert record['actuator_state']['command_rad_s']==[0.,0.]
+                    assert record['actuator_state']['shaft_velocity_rad_s']==[0.,0.]
+                    assert record['actuator_state']['encoder_angle_rad']==[0.,0.]
+                    assert 'motor_application' not in record
+            else:
+                # Historical evidence audit only. Never a live control rule.
+                for record in records[-5:]:
+                    assert record['command']['reason']=='measured_stop'
+                    assert record['motor_application']['after_braking']['shaft_velocity_rad_s']==[0.,0.]
             assert abs(records[-1]['front_clearance_m']-evaluation[-1]['true_front_clearance_m'])<1e-12
-            assert .1<=records[-1]['front_clearance_m']<=.101
+            if not observation_only:assert .1<=records[-1]['front_clearance_m']<=.101
             counts.append(len(records))
         assert summary['success'] and step==summary['canonical_executions']
     finally:
         if bridge:bridge.close()
+        if replay_directory:replay_directory.cleanup()
         if archive:archive.close()
     result={'manifest_files_verified':len(manifest),'trial_samples':counts,'canonical_states':step,
             'persistence_pairs':step-1,'bit_exact_canonical_replay':replay,'behavioral_checks':'PASS'}

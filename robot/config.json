@@ -23,17 +23,7 @@
   "kernel_parameters": {"selection": "General", "chi_unit": "m", "basis": "Select existing Kernel V9 Origin general values; no copied operator formulas"},
   "edge_class": "Coupling",
   "edge_class_basis": "Software-routed cross-component information relationships; no physical measurement of coupling strength asserted",
-  "control_projection": {
-    "name": "bounded-R-magnitude-approach",
-    "reads": "abs(R[E2]) for drive magnitude; measured forward clearance and instruction for direction and stopping",
-    "gain_s_inverse": 1.0,
-    "max_speed_m_s": 0.15,
-    "clearance_tolerance_m": 0.001,
-    "motion_budget_fraction": 0.25,
-    "preserves": "E2 canonical R magnitude, observed clearance relative to target",
-    "discards": "other R edge outputs for command projection only; all canonical outputs retained in evidence",
-    "note": "Conventional engineering command projection C, not ABR mathematics or learning. Zero R gives zero motion. Quarter-error pulse budget accounts conservatively for braking travel."
-  },
+  "operator_to_actuator_mapping": null,
   "isaac_sim": {
     "asset": "/Isaac/Robots/NVIDIA/Jetbot/jetbot.usd",
     "wheel_joints": ["left_wheel_joint", "right_wheel_joint"],

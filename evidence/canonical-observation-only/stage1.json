@@ -1,0 +1,128 @@
+{
+  "domain": "Origin-defined relational domain: Robot Body, LiDAR Sensor, Motor Actuator, Genetic Memory.",
+  "declaration_source": {
+    "authority": "Origin",
+    "stage": "Stage 1: structural D and M only"
+  },
+  "structural_measurement_declaration": {
+    "statement": "M identifies the declared nodes, edges, and directed information relationships from each source node to its destination node.",
+    "physical_measurement_mappings": null,
+    "numerical_edge_values": null
+  },
+  "abr_topology": {
+    "nodes": [
+      {
+        "id": "N1",
+        "description": "Robot Body",
+        "observable": null,
+        "mapping_name": null
+      },
+      {
+        "id": "N2",
+        "description": "LiDAR Sensor",
+        "observable": null,
+        "mapping_name": null
+      },
+      {
+        "id": "N3",
+        "description": "Motor Actuator",
+        "observable": null,
+        "mapping_name": null
+      },
+      {
+        "id": "N4",
+        "description": "Genetic Memory",
+        "observable": null,
+        "mapping_name": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "E1",
+        "from_node": "N1",
+        "to_node": "N2",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E2",
+        "from_node": "N2",
+        "to_node": "N1",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E3",
+        "from_node": "N1",
+        "to_node": "N3",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E4",
+        "from_node": "N3",
+        "to_node": "N1",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E5",
+        "from_node": "N1",
+        "to_node": "N4",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E6",
+        "from_node": "N4",
+        "to_node": "N1",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E7",
+        "from_node": "N2",
+        "to_node": "N3",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E8",
+        "from_node": "N3",
+        "to_node": "N2",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E9",
+        "from_node": "N2",
+        "to_node": "N4",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E10",
+        "from_node": "N4",
+        "to_node": "N2",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E11",
+        "from_node": "N3",
+        "to_node": "N4",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      },
+      {
+        "id": "E12",
+        "from_node": "N4",
+        "to_node": "N3",
+        "relationship": "Directed information relationship from source to destination",
+        "class": null
+      }
+    ],
+    "operator_parameters": null
+  },
+  "calculation": null
+}

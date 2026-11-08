@@ -73,16 +73,3 @@ def node_values(inboxes):
     packets = {d['source']: d['payload'] for msgs in inboxes.values() for d in msgs}
     return [packets['N1']['lidar_to_front_m'], packets['N2']['forward']['range_m'],
             packets['N3']['encoder_mean_arc_m'], packets['N4']['front_clearance_target_m']]
-
-
-def drive_projection(kernel, clearance, target, config):
-    c = config['control_projection']
-    error = clearance - target
-    if error <= c['clearance_tolerance_m']:
-        return {'left_rad_s': 0.0, 'right_rad_s': 0.0, 'reason': 'measured_stop'}
-    r = abs(kernel['spatial']['R'][0][1])  # E2 is N2 -> N1, preserved edge order.
-    speed = min(c['max_speed_m_s'], c['gain_s_inverse'] * r,
-                c['motion_budget_fraction'] * error / config['motor']['pulse_s'])
-    wheel = speed / config['geometry']['wheel_radius_m']
-    return {'left_rad_s': wheel, 'right_rad_s': wheel, 'reason': 'canonical_R_E2_magnitude',
-            'R_E2_m': kernel['spatial']['R'][0][1], 'requested_linear_speed_m_s': speed}

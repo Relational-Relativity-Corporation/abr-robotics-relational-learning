@@ -1,0 +1,35 @@
+{
+  "trial": 2,
+  "observation_count": 5,
+  "kernel_executions": 5,
+  "initial_measured_clearance_m": 1.08,
+  "final_measured_clearance_m": 1.08,
+  "independently_evaluated_final_clearance_m": 1.08,
+  "final_shaft_velocity_rad_s": [
+    0.0,
+    0.0
+  ],
+  "minimum_valid_forward_range_m": 1.2,
+  "actuator_motion_commands_issued": 0,
+  "observed_actuator_state": {
+    "command_rad_s": [
+      0.0,
+      0.0
+    ],
+    "applied_drive_state": "IDLE",
+    "encoder_angle_rad": [
+      0.0,
+      0.0
+    ],
+    "shaft_velocity_rad_s": [
+      0.0,
+      0.0
+    ],
+    "encoder_mean_arc_m": 0.0,
+    "acquisition_time_s": 1.818749999999967,
+    "origin": "simulated shaft feedback; not XM430 registers"
+  },
+  "successful_execution": true,
+  "first_process_step": 6,
+  "last_process_step": 10
+}

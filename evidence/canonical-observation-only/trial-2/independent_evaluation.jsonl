@@ -1,0 +1,5 @@
+{"trial_frame": 0, "robot_world_x_m": 0.0, "robot_world_y_m": 0.0, "object_center_world_m": [1.3, 0.0], "object_radius_m": 0.1, "true_front_clearance_m": 1.08, "actual_shaft_velocity_rad_s": [0.0, 0.0], "time_s": 1.091250000000014}
+{"trial_frame": 1, "robot_world_x_m": 0.0, "robot_world_y_m": 0.0, "object_center_world_m": [1.3, 0.0], "object_radius_m": 0.1, "true_front_clearance_m": 1.08, "actual_shaft_velocity_rad_s": [0.0, 0.0], "time_s": 1.2731250000000023}
+{"trial_frame": 2, "robot_world_x_m": 0.0, "robot_world_y_m": 0.0, "object_center_world_m": [1.3, 0.0], "object_radius_m": 0.1, "true_front_clearance_m": 1.08, "actual_shaft_velocity_rad_s": [0.0, 0.0], "time_s": 1.4549999999999905}
+{"trial_frame": 3, "robot_world_x_m": 0.0, "robot_world_y_m": 0.0, "object_center_world_m": [1.3, 0.0], "object_radius_m": 0.1, "true_front_clearance_m": 1.08, "actual_shaft_velocity_rad_s": [0.0, 0.0], "time_s": 1.6368749999999788}
+{"trial_frame": 4, "robot_world_x_m": 0.0, "robot_world_y_m": 0.0, "object_center_world_m": [1.3, 0.0], "object_radius_m": 0.1, "true_front_clearance_m": 1.08, "actual_shaft_velocity_rad_s": [0.0, 0.0], "time_s": 1.818749999999967}

@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from signals import InstructionMemory, InformationRouter, geometry_packet, forward_return, drive_projection
+from signals import InstructionMemory, InformationRouter, geometry_packet, forward_return
 from substrate import PythonRobot
 
 HERE = Path(__file__).resolve().parent
@@ -54,13 +54,11 @@ class Components(unittest.TestCase):
         bad=copy.deepcopy(STAGE1);bad['abr_topology']['edges'][0]['to_node']='N3'
         with self.assertRaises(ValueError):InformationRouter(bad)
 
-    def test_command_requires_canonical_R_and_measured_stop(self):
-        kernel={'spatial':{'R':[[1.]*12]}}
-        self.assertGreater(drive_projection(kernel,.5,.1,CONFIG)['left_rad_s'],0)
-        kernel['spatial']['R']=[[0.]*12]
-        self.assertEqual(drive_projection(kernel,.5,.1,CONFIG)['left_rad_s'],0)
-        kernel['spatial']['R']=[[1.]*12]
-        self.assertEqual(drive_projection(kernel,.1,.1,CONFIG)['reason'],'measured_stop')
+    def test_no_behavioral_projection_or_authorized_mapping(self):
+        import signals
+        self.assertFalse(hasattr(signals,'drive_projection'))
+        self.assertNotIn('control_projection',CONFIG)
+        self.assertIsNone(CONFIG['operator_to_actuator_mapping'])
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

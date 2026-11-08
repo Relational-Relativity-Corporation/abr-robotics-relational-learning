@@ -1,1 +1,2 @@
 /field/stage1_robotics_domain.json -text
+/evidence/canonical-observation-only/** -text
