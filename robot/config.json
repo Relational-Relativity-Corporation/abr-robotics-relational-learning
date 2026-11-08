@@ -1,0 +1,44 @@
+{
+  "field_id": "robot-four-component-information-field",
+  "stage1_file": "field/stage1_robotics_domain.json",
+  "stage1_sha256": "f96a7540302be82661bc003a5129562173da4e2336e14be4621c5b3f18836b9b",
+  "geometry": {
+    "chassis_length_m": 0.24,
+    "chassis_width_m": 0.18,
+    "front_surface_x_m": 0.12,
+    "lidar_mount_m": [0.0, 0.0, 0.16],
+    "wheel_radius_m": 0.03,
+    "wheel_base_m": 0.1125
+  },
+  "lidar": {"min_range_m": 0.15, "max_range_m": 12.0, "sample_rate_hz": 8000, "rotation_hz": 5.5},
+  "motor": {"max_wheel_rad_s": 5.0, "acceleration_rad_s2": 50.0, "pulse_s": 0.05, "brake_s": 0.15},
+  "genetic_instruction": {"front_clearance_target_m": 0.1, "unit": "m", "role": "Origin instruction, not sensor observation"},
+  "measurement_mapping": {
+    "N1": {"signal": "body.lidar_to_front_m", "unit": "m", "origin": "declared design geometry readback, not measured pose"},
+    "N2": {"signal": "lidar.forward.range_m", "unit": "m", "origin": "valid forward beam observation from LiDAR origin"},
+    "N3": {"signal": "motor.encoder_mean_arc_m", "unit": "m", "origin": "wheel_radius * mean actual shaft encoder angle; not commanded displacement or environmental localization"},
+    "N4": {"signal": "memory.front_clearance_target_m", "unit": "m", "origin": "persistent instruction readback, not measured environment"},
+    "interpretation": "One scalar information component in metres at each of four component loci. These are distinct quantities and roles. Kernel differences characterize this declared information projection, not distances between physical components. No duplicated range is padded into another node."
+  },
+  "kernel_parameters": {"selection": "General", "chi_unit": "m", "basis": "Select existing Kernel V9 Origin general values; no copied operator formulas"},
+  "edge_class": "Coupling",
+  "edge_class_basis": "Software-routed cross-component information relationships; no physical measurement of coupling strength asserted",
+  "control_projection": {
+    "name": "bounded-R-magnitude-approach",
+    "reads": "abs(R[E2]) for drive magnitude; measured forward clearance and instruction for direction and stopping",
+    "gain_s_inverse": 1.0,
+    "max_speed_m_s": 0.15,
+    "clearance_tolerance_m": 0.001,
+    "motion_budget_fraction": 0.25,
+    "preserves": "E2 canonical R magnitude, observed clearance relative to target",
+    "discards": "other R edge outputs for command projection only; all canonical outputs retained in evidence",
+    "note": "Conventional engineering command projection C, not ABR mathematics or learning. Zero R gives zero motion. Quarter-error pulse budget accounts conservatively for braking travel."
+  },
+  "isaac_sim": {
+    "asset": "/Isaac/Robots/NVIDIA/Jetbot/jetbot.usd",
+    "wheel_joints": ["left_wheel_joint", "right_wheel_joint"],
+    "geometry_status": "Jetbot wheel geometry reference; Python fallback is a declared 240x180 mm chassis, not a verified Jetbot collision model",
+    "mount_and_front": "Author LiDAR child at lidar_mount_m and a front bumper with forward face at front_surface_x_m; validate asset bounds before driving",
+    "compatibility": "Injected articulation, wheel feedback and LiDAR beam adapters; SDK execution not verified locally"
+  }
+}

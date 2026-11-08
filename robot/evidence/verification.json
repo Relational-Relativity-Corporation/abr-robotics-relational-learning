@@ -1,0 +1,11 @@
+{
+  "manifest_files_verified": 21,
+  "trial_samples": [
+    166,
+    118
+  ],
+  "canonical_states": 284,
+  "persistence_pairs": 283,
+  "bit_exact_canonical_replay": true,
+  "behavioral_checks": "PASS"
+}
